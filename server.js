@@ -1,6 +1,6 @@
-const express = require("express")
-const morgan = require("morgan")
-const fileRoutes = require("./routes/fileRoutes")
+import express from "express";
+import morgan from "morgan";
+import fileRoutes from "./routes/fileRoutes.js";
 
 const app = express()
 const PORT = 3000

@@ -1,7 +1,6 @@
-const express = require("express")
-const {streamFile} = require("../controllers/fileController")
+import express from "express"
+import {streamFile} from "../controllers/fileController.js"
 
 const router = express.Router()
 router.get("/read",streamFile)
-
-module.exports = router
+export default router
