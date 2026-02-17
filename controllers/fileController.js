@@ -10,8 +10,6 @@ const {hashString} = require("../utils/cryptoUtil")
         return res.status(404).join({message: "File Not Found"})
     }
     console.log("Hashed string:", hashString("Sample String"));
-    
-    
          //This is for download the file
     res.setHeader("Content-Disposition","attachment; filename=largeFile.txt")
 
