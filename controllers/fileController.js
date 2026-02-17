@@ -11,7 +11,7 @@ const {hashString} = require("../utils/cryptoUtil")
     }
     console.log("Hashed string:", hashString("Sample String"));
     
-    res.setHeader("Content-Type","text/plain")
+    
          //This is for download the file
     res.setHeader("Content-Disposition","attachment; filename=largeFile.txt")
 
