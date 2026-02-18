@@ -1,9 +1,10 @@
 import * as userService from "../services/userService.js"
+import { successResponse, errorResponse } from "../utils/responseHandler.js"
 
 export const createUser = async (req, res, next) => {
     try {
         const user = await userService.createUser(req.body)
-        res.status(201).json(user)
+        return successResponse(res, 201, "User created successfully", user)
     } catch (error) {
         next(error)
     }
@@ -12,7 +13,7 @@ export const createUser = async (req, res, next) => {
 export const getAllUsers = async (req, res, next) => {
     try {
         const users = await userService.getAllUsers()
-        res.json(users)
+        return successResponse(res, 200, "Users fetched successfully", users)
     } catch (error) {
         next(error)
     }
@@ -22,9 +23,9 @@ export const getUserById = async (req, res, next) => {
     try {
         const user = await userService.getUserById(req.params.id)
         if (!user) {
-            res.status(401).json({ message: "User not found" })
+            return errorResponse(res, 404, "User Not Found")
         }
-        res.json(user)
+        return successResponse(res, 200, "Users fetched successfully", user)
     } catch (error) {
         next(error)
     }
@@ -32,7 +33,7 @@ export const getUserById = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
     try {
         await userService.deleteUser(req.params.id)
-        res.json({ message: "User deleted successfully" })
+        return successResponse(res, 200, "User deleted successfully")
     } catch (error) {
         next(error)
     }
