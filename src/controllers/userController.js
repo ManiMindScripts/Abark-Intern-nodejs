@@ -1,14 +1,6 @@
 import * as userService from "../services/userService.js"
 import { successResponse, errorResponse } from "../utils/responseHandler.js"
 
-export const createUser = async (req, res, next) => {
-    try {
-        const user = await userService.createUser(req.body)
-        return successResponse(res, 201, "User created successfully", user)
-    } catch (error) {
-        next(error)
-    }
-}
 
 export const getAllUsers = async (req, res, next) => {
     try {
