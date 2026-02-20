@@ -10,7 +10,6 @@ export const getAllUsers = async (req, res, next) => {
         next(error)
     }
 }
-
 export const uploadProfileiImage = async (req,res,next) => {
     try {
         const userId = req.params.id
@@ -24,7 +23,6 @@ export const uploadProfileiImage = async (req,res,next) => {
         next(error)
     }
 }
-
 export const getUserById = async (req, res, next) => {
     try {
         const user = await userService.getUserById(req.params.id)
