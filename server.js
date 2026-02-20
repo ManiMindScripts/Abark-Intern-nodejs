@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv"
+import path from "path"
+import { fileURLToPath } from "url";
 import userRoutes from "./src/routes/userRoutes.js"
 import authRoutes from "./src/routes/authRoutes.js"
 import errorMiddleware from "./src/middlewares/errorMiddleware.js"
@@ -11,6 +13,11 @@ const app = express()
 const PORT = 3000
 
 app.use(express.json())
+
+const _fileName = fileURLToPath(import.meta.url)
+const _dirName = path.dirname(_fileName)
+
+app.use("/uploads",express.static(path.join(_dirName,"uploads")))
 
 app.get("/",(req,res)=> {
     res.send("Authentication API Running...")

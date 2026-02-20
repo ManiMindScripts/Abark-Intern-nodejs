@@ -11,6 +11,19 @@ export const getAllUsers = async (req, res, next) => {
     }
 }
 
+export const uploadProfileiImage = async (req,res,next) => {
+    try {
+        if(!req.file){
+            return errorResponse(res,400,"No File Uploaded")
+        }
+        const filePath = `/uploads/${req.file.filename}`
+        const updateUSer  = await userService.updateProfileiImage(req.user.id,filePath)
+        successResponse(res,200,"Profile image uploaded",{profileiImage: updateUSer.profileImage})
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const getUserById = async (req, res, next) => {
     try {
         const user = await userService.getUserById(req.params.id)
