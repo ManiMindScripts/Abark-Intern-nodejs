@@ -9,7 +9,7 @@ const router = express.Router()
 router.use(authMiddleware)
 
 router.get("/",userController.getAllUsers)
-router.patch("/profile-image",authMiddleware,upload.single("profileImage"),userController.uploadProfileiImage)
+router.patch("/:id/upload",authMiddleware,upload.single("profileImage"),userController.uploadProfileiImage)
 router.get("/:id",userController.getUserById)
 router.delete("/:id",
     roleMiddleware("ADMIN"),
