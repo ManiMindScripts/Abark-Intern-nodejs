@@ -1,40 +1,31 @@
 import { prisma } from "../config/prisma.js";
 import { hashPassword, comparePassword } from "../utils/password.util.js";
-import { generateToken } from "../utils/jwt.util.js";
 
-export const registerUser = async ({ name, email, password }) => {
-    const existingUser = await prisma.user.findUnique({
-        where: { email },
-    })
-    if (existingUser) {
-        throw new Error("Email already exists")
-    }
-    const userRole = await prisma.role.findUnique({
-        where: { name: "USER" },
-    })
-    if (!userRole) {
-        throw new Error("User role Not Found")
-    }
+export const registerIntern = async (data) => {
 
-    const hashedPassword = await hashPassword(password)
+    const hashed = await hashPassword(data.password)
 
     const user = await prisma.user.create({
         data: {
-            name,
-            email,
-            password: hashedPassword,
-            roleId: userRole.id
-        },
+            name: data.name,
+            email: data.email,
+            password: hashed,
+            role: "INTERN"
+        }
     })
-    delete user.password
+    await prisma.intern.create({
+        data: {
+            userId: user.id
+        }
+    })
     return user
-
 }
-
 export const loginUser = async ({ email, password }) => {
+    if(!email || !password){
+        throw new Error("These are required")
+    }
     const user = await prisma.user.findUnique({
         where: { email },
-         include: { role: true }
     })
     if (!user) {
         throw new Error("Invalid credentials")
@@ -44,10 +35,5 @@ export const loginUser = async ({ email, password }) => {
     if (!isMatch) {
         throw new Error("Invalid credentials")
     }
-    const token = generateToken({
-        id: user.id,
-        role: user.role.name
-    })
-    delete user.password
-    return { user, token }
+    return user
 }
